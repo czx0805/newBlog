@@ -1,0 +1,105 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+a {
+    text-decoration:none !important;
+    outline:none;
+}
+
+a:hover, a:active {
+    outline: none;
+}
+body{
+	background-color: rgb(241,241,241);
+}
+header{
+	width: 100%;
+    margin-top: 50px;
+    transform : scale(0);
+    transition: 1s;
+}
+header h1{
+	text-align: center;
+    font-size: 4rem;
+    line-height: 200px;
+    font-family: cursive;
+	color: #4d4d4d;
+}
+header h2{
+	text-align: center;
+    margin-top: -1.2rem;
+    color: #999;
+}
+.container{
+	margin-top: 30px;
+	width: 100%;
+	height: 300px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	transition: 1s;
+}
+.tag{
+	width: 380px;
+	height: 200px;
+	background-color: #fff;
+	margin-top: 15px;
+	transform: translateY(50px);
+	transition: 1s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+}
+.container .tag1,.container .tag2{
+	margin-right: 15px;
+}
+.container a{
+	display: block;
+}
+.container strong:before{
+	content: "";
+	display: block;
+	width: 60px;
+	height: 60px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	background-repeat: no-repeat;
+}
+.container .tag1 strong:before{
+	background-image: url('img/icon_work.svg');
+}
+.container .tag2 strong:before{
+	background-image: url('img/icon_blog.svg');
+}
+.container .tag3 strong:before{
+	background-image: url('img/icon_about.svg');
+}
+.container strong{
+	color: rgb(60,60,60);
+	display: block;
+	font-size: 1.5rem;
+}
+.container .tag1:hover{
+	background-color: rgb(81,179,200);
+}
+.container .tag2:hover{
+	background-color: rgb(90,200,135);
+}
+.container .tag3:hover{
+	background-color: rgb(181,100,151);
+}
+.container .tag:hover strong{
+	color: rgb(255,255,255);
+}
+.container .tag1:hover strong:before{
+	background-image: url('img/icon_work_white.svg');
+}
+.container .tag2:hover strong:before{
+	background-image: url('img/icon_blog_white.svg');
+}
+.container .tag3:hover strong:before{
+	background-image: url('img/icon_about_white.svg');
+}
