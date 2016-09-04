@@ -1,5 +1,5 @@
 function loadPage(type){
-	location.href = "infoList.html?"+type;
+	location.href = "view/infoList.html?"+type;
 }
 $(function(){
 	setTimeout(function(){

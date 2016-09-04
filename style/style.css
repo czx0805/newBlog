@@ -69,13 +69,13 @@ header h2{
 	background-repeat: no-repeat;
 }
 .container .tag1 strong:before{
-	background-image: url('img/icon_work.svg');
+	background-image: url('../img/icon_work.svg');
 }
 .container .tag2 strong:before{
-	background-image: url('img/icon_blog.svg');
+	background-image: url('../img/icon_blog.svg');
 }
 .container .tag3 strong:before{
-	background-image: url('img/icon_about.svg');
+	background-image: url('../img/icon_about.svg');
 }
 .container strong{
 	color: rgb(60,60,60);
@@ -95,11 +95,11 @@ header h2{
 	color: rgb(255,255,255);
 }
 .container .tag1:hover strong:before{
-	background-image: url('img/icon_work_white.svg');
+	background-image: url('../img/icon_work_white.svg');
 }
 .container .tag2:hover strong:before{
-	background-image: url('img/icon_blog_white.svg');
+	background-image: url('../img/icon_blog_white.svg');
 }
 .container .tag3:hover strong:before{
-	background-image: url('img/icon_about_white.svg');
+	background-image: url('../img/icon_about_white.svg');
 }

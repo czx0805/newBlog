@@ -1,0 +1,10 @@
+{
+	"data":[
+		{
+			"title" : "Flex属性学习",
+			"introduce" : "页面传统布局一般依赖于display，position，float属性，这些属性对于一些特殊的布局需要特殊处理，不易实现。而Flex属性，可以简便的实现各种常用页面布局方案。",
+			"img" : "../img/bg2015071002.png",
+			"src" : ""
+		}
+	]	
+}
