@@ -257,6 +257,7 @@ header .tab3:hover strong:before{
 	display: flex;
 	align-items: center;
 	padding-left: 10px;
+	justify-content: space-between;
 }
 .blogRight li a{
 	font-size: .9rem;
@@ -268,4 +269,14 @@ header .tab3:hover strong:before{
 }
 .blogRight li a:hover{
 	color: rgb(208,59,59);
+}
+.blogRight li div{
+	padding: 3px 5px;
+	border-radius: 10px;
+	background: rgb(208,59,59);
+	color: #ffffff;
+	margin-right: 10px;
+	font-size: .9rem;
+	min-width: 20px;
+	text-align: center;
 }
