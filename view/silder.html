@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .main{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+        img{
+            width: 100%;
+            height: 542px;
+        }
+        #content{
+            height: 542px;
+            list-style: none;
+            position: relative;
+        }
+        ul li{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <ul id="content">
+            <li>
+                <img src="壁纸01.jpg">
+            </li>
+            <li>
+                <img src="壁纸02.jpg">
+            </li>
+            <li>
+                <img src="壁纸03.jpg">
+            </li>
+            <li>
+                <img src="壁纸04.jpg">
+            </li>
+            <li>
+                <img src="壁纸05.jpg">
+            </li>
+            <li>
+                <img src="壁纸06.jpg">
+            </li>
+            <li>
+                <img src="壁纸07.jpg">
+            </li>
+            <li>
+                <img src="壁纸08.jpg">
+            </li>
+            <li>
+                <img src="壁纸09.jpg">
+            </li>
+            <li>
+                <img src="壁纸10.jpg">
+            </li>
+            <li>
+                <img src="壁纸13.jpg">
+            </li>
+            <li>
+                <img src="壁纸14.jpg">
+            </li>
+            <li>
+                <img src="壁纸15.jpg">
+            </li>
+            <li>
+                <img src="壁纸16.jpg">
+            </li>
+        </ul> 
+    </div>
+    <div id="load">
+        dsfsf
+    </div>    
+    <script src="jquery.js"></script>
+    <script>
+        $(function(){
+            $("#load").bind("click",function(){
+                $("#load").load("test.html");
+            });
+        });
+    
+        var domList =  document.querySelectorAll('.main li');
+        var fristNode = domList[0].cloneNode(true);
+        var lastNode = domList[domList.length -1].cloneNode(true);
+        document.querySelectorAll("#content")[0].appendChild(fristNode);
+        document.querySelectorAll("#content")[0].insertBefore(lastNode,domList[0]);
+        var bodyWidth = document.getElementsByTagName("body")[0].clientWidth;
+        var dom = document.getElementById("content");
+        dom.style.width = bodyWidth * (2 + domList.length ) + "px";
+        var imgDomList = document.getElementsByTagName("img");
+        for(var i = 0; i < imgDomList.length; i ++){
+            imgDomList[i].style.width = bodyWidth + "px";
+        }
+        dom.style.transform = "translate("+ -bodyWidth +"px,"+ 0 +"px)";
+        dom.style.transition = ".5s";
+        var startX = startY = 0;
+        var endX = endY = 0;
+        var touchEvent = null;
+        var isTouch = false;
+        var positionX = -bodyWidth;
+        dom.addEventListener("touchstart",function(e){
+            //touchstart
+            isTouch = false;
+            startX = e.targetTouches[0].pageX;
+            startY = e.targetTouches[0].pageY;
+            touchEvent = setTimeout(function(){
+                isTouch = true;
+            },50);
+        });
+        dom.addEventListener("touchmove",function(e){
+            //touchmove
+            if(isTouch){
+                endX = e.targetTouches[0].pageX;
+                endY = e.targetTouches[0].pageY;
+                var moveX = endX - startX;
+                var moveY = endY - startY;
+                dom.style.transform = "translate("+ (moveX  + positionX) +"px,"+ 0 +"px)";
+                
+            }
+        });
+        dom.addEventListener("touchend",function(e){
+            //touchEnd
+            clearTimeout(touchEvent);
+            var moveX = endX - startX;
+                var moveY = endY - startY;
+                if(Math.abs(moveX) > 50){
+                    dom.style.transform = "translate("+ ((moveX >0 ? bodyWidth : - bodyWidth) + positionX) +"px,"+ 0 +"px)";
+                }else{
+                    dom.style.transform = "translate("+ positionX +"px,"+ 0 +"px)";
+                }
+                positionX = document.getElementById("content").style.transform.match(/-*\d+\.*\d+/);
+            positionX = Number(positionX ? positionX[0] : 0);
+            setTimeout(function(){
+            if(parseInt(positionX/bodyWidth) === -domList.length - 1){
+                dom.style.transition = "0s";
+                dom.style.transform = "translate("+ -bodyWidth +"px,"+ 0 +"px)"
+                positionX = -bodyWidth;
+            }else if(parseInt(positionX/bodyWidth) === 0 ){
+                dom.style.transition = "0s";
+                dom.style.transform = "translate("+ -(bodyWidth*(domList.length)) +"px,"+ 0 +"px)";
+                positionX = -bodyWidth*(domList.length);
+            }
+            },0);
+            
+            setTimeout(function(){
+                dom.style.transition = ".5s";
+            },50);
+            
+        });
+    </script>
+</body>
+</html>
