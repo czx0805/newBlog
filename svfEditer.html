@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #toolbar {
+            width: 285px;
+            box-sizing: border-box;
+            border-right: 1px #666 solid;
+            position: absolute;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        #toolbar h3 {
+            background-color: #EEE;
+            line-height: 36px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        
+        #svgType {
+            margin-bottom: 10px;
+        }
+        
+        .typeButton {
+            width: 50px;
+            height: 26px;
+            margin-left: 10px;
+            border: 1px #eee solid;
+            border-radius: 5px;
+            box-shadow: 0;
+            display: inline-block;
+            text-align: center;
+            font-size: 12px;
+            line-height: 26px;
+            cursor: pointer
+        }
+        
+        .typeButton:hover {
+            border: 1px #0088cc solid;
+        }
+        
+        #toolbar .buttonSelected {
+            border: 1px #50b400 solid;
+        }
+        
+        #shape_attrs ul li {
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            width: 100%;
+            padding-left: 8px;
+        }
+        
+        #shape_attrs ul li label {
+            display: inline-block;
+            width: 65px;
+            font-size: 12px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        #container{
+            position: absolute;
+            left: 290px;
+            top: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0,0.4);
+            border-radius: 5px;
+            bottom: 10px;
+            right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toolbar">
+        <div id="svgType">
+            <h3>类型</h3>
+            <div class="typeButton" data-type='rect'>矩形</div>
+            <div class="typeButton" data-type='circle'>圆形</div>
+            <div class="typeButton" data-type='ellipse'>椭圆</div>
+            <div class="typeButton" data-type='line'>直线</div>
+        </div>
+        <div id="svfAttrs">
+            <h3>属性</h3>
+            <form id='shape_attrs'>
+                <ul>
+                    <!--Rect Start-->
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectX">X:</label>
+                        <input type="number" id='rectX' />
+                    </li>
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectX">Y:</label>
+                        <input type="number" id='rectY' />
+                    </li>
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectWidth">Width:</label>
+                        <input type="number" id='rectWidth' />
+                    </li>
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectHeight">Height:</label>
+                        <input type="number" id='rectHeight' />
+                    </li>
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectRX">RX:</label>
+                        <input type="number" id='rectRX' />
+                    </li>
+                    <li data-shape='rect' class="hidden">
+                        <label for="rectRY">RY:</label>
+                        <input type="number" id='rectRY' />
+                    </li>
+                    <!--Rect end-->
+                    <!--Circle Start-->
+                    <li data-shape='circle' class="hidden">
+                        <label for="circleCX">CX:</label>
+                        <input type="number" id='circleCX' />
+                    </li>
+                    <li data-shape='circle' class="hidden">
+                        <label for="circleCY">CY:</label>
+                        <input type="number" id='circleCY' />
+                    </li>
+                    <li data-shape='circle' class="hidden">
+                        <label for="circleR">R:</label>
+                        <input type="number" id='circleR' />
+                    </li>
+                    <!--Circle end-->
+                    <!--Ellipse Start-->
+                    <li data-shape='ellipse' class="hidden">
+                        <label for="ellipseCX">CX:</label>
+                        <input type="number" id='ellipseCX' />
+                    </li>
+                    <li data-shape='ellipse' class="hidden">
+                        <label for="ellipseCY">CY:</label>
+                        <input type="number" id='ellipseCY' />
+                    </li>
+                    <li data-shape='ellipse' class="hidden">
+                        <label for="ellipseRX">RX:</label>
+                        <input type="number" id='ellipseRX' />
+                    </li>
+                    <li data-shape='ellipse' class="hidden">
+                        <label for="ellipseRY">RY:</label>
+                        <input type="number" id='ellipseRY' />
+                    </li>
+                    <!--Ellipse end-->
+                    <!--line Start-->
+                    <li data-shape='line' class="hidden">
+                        <label for="lineX1">X1:</label>
+                        <input type="number" id='lineCX' />
+                    </li>
+                    <li data-shape='line' class="hidden">
+                        <label for="lineY1">Y1:</label>
+                        <input type="number" id='lineY1' />
+                    </li>
+                    <li data-shape='line' class="hidden">
+                        <label for="lineX2">X2:</label>
+                        <input type="number" id='lineX2' />
+                    </li>
+                    <li data-shape='line' class="hidden">
+                        <label for="lineY2"> Y2:</label>
+                        <input type="number" id='lineY2' />
+                    </li>
+                    <!--line end-->
+                    <!--public attrs start-->
+                    <li data-shape='all' class="hidden">
+                        <label for="fill">填充色:</label>
+                        <input type="color" value='#ffffff' id='fill' />
+                    </li>
+                    <li data-shape='all' class="hidden">
+                        <label for="rectStrokeColor">描边:</label>
+                        <input type="color" value='#000000' id='strokeColor' />
+                        <input type="range" value='1' min='0' max='50' id='strokeWidth' />
+                    </li>
+                    <li data-shape='all' class="hidden">
+                        <label for="translateX">translateX:</label>
+                        <input type="number" id='translateX' />
+                    </li>
+                    <li data-shape='all' class="hidden">
+                        <label for="translateY">translateY:</label>
+                        <input type="number" id='translateY' />
+                    </li>
+                    <li data-shape='all' class="hidden">
+                        <label for="rotate">rotate:</label>
+                        <input type="range" value='0' min='-180' max='180' id='rotate' />
+                    </li>
+                    <li data-shape='all' class="hidden">
+                        <label for="scale">scale:</label>
+                        <input type="range" value='1' min='-1' max='2' step="0.1" value="1" id='scale' />
+                    </li>
+                    <!--public attrs end-->
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div id="container">
+
+    </div>
+</body>
+<script>
+    //默认配置
+    var defaultConfig = {
+        rect:{
+            x : 0,
+            y : 0,
+            width : 100,
+            height : 50,
+            rx : 0,
+            ry : 0
+        },
+        circle:{
+            cx : 50,
+            cy : 50,
+            r : 50
+        },
+        ellipse:{
+            cx : 60,
+            cy : 50,
+            rx : 60,
+            ry : 50
+
+        },
+        line:{
+            x1 : 0,
+            y1 : 0,
+            x2 : 50,
+            y2 : 50
+        }
+    };
+
+    //当前编辑对象
+    var currentDom = null;
+
+    //创建SVG元素
+    var SVF_NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(SVF_NS, 'svg');
+    svg.setAttribute('width','100%');
+    svg.setAttribute('height','100%');
+    document.getElementById('container').appendChild(svg);
+    //按钮点击事件
+    document.getElementById('svgType').addEventListener('click', function (e) {
+        if (e.target && e.target.className.indexOf('typeButton') !== -1) {
+            currentDom = null;
+            //添加选中样式
+            removeClass(document.querySelectorAll('.typeButton'), 'buttonSelected');
+            addClass(e.target, 'buttonSelected');
+            //显示类型对应的配置项
+            addClass(document.querySelectorAll('[data-shape]'), 'hidden');
+            removeClass(document.querySelectorAll('[data-shape="all"]'),
+                'hidden');
+            removeClass(document.querySelectorAll('[data-shape="' + e.target.getAttribute('data-type') + '"]'),
+                'hidden');
+            drawShape(e.target.getAttribute('data-type'));
+        }
+        e.preventDefault();
+        e.stopPropagation();
+    }, false);
+
+    /*
+        移除class
+    */
+    function removeClass(dom, className) {
+        if (!dom) {
+            return;
+        }
+        var reg = new RegExp('\\b(' + className + ')\\b', 'gim');
+        if (dom.length) {
+            for (var i = 0; i < dom.length; i++) {
+                dom[i].className = dom[i].className.replace(reg, "").trim();
+            }
+        } else {
+            dom.className = dom.className.replace(reg, "").trim();
+        }
+
+    };
+
+    /*
+        添加class
+    */
+    function addClass(dom, className) {
+        if (!dom) {
+            return;
+        }
+        var reg = new RegExp('\\b(' + className + ')\\b', 'gim');
+        if (dom.length) {
+            for (var i = 0; i < dom.length; i++) {
+                if (!reg.test(dom[i].className)) {
+                    dom[i].className = dom[i].className.trim() + " " + className;
+                }
+            }
+        } else {
+            if (!reg.test(dom.className)) {
+                dom.className = dom.className.trim() + " " + className;
+            }
+        }
+
+    }
+
+    /*
+        显示类型属性配置
+    */
+    function showAttrsConfig(type) {
+
+    }
+
+    /*
+        显示元素
+    */
+    function showDom(selector) {}
+    /*
+        隐藏元素
+    */
+    function hiddenDom(selector) {
+
+    }
+
+    /*
+        创建图形
+    */
+    function drawShape(type){
+        if(!currentDom){
+            var svgDom = document.createElementNS(SVF_NS, type);
+            for (attr in defaultConfig[type]){
+                svgDom.setAttribute(attr,defaultConfig[type][attr]);
+            }
+            currentDom = svgDom;
+            document.querySelector('svg').appendChild(svgDom);
+        }else{
+
+        }
+        
+    }
+</script>
+
+</html>
