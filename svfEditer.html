@@ -34,7 +34,7 @@
         .typeButton {
             width: 50px;
             height: 26px;
-            margin-left: 10px;
+            margin-left: 8px;
             border: 1px #eee solid;
             border-radius: 5px;
             box-shadow: 0;
@@ -226,19 +226,21 @@
             cy : 50,
             rx : 60,
             ry : 50
-
         },
         line:{
             x1 : 0,
             y1 : 0,
             x2 : 50,
             y2 : 50
+        },
+        public:{
+            fill : "#ffffff",
+            stroke: "#000000",
+            "stroke-width": "1"
         }
     };
-
     //当前编辑对象
     var currentDom = null;
-
     //创建SVG元素
     var SVF_NS = 'http://www.w3.org/2000/svg';
     var svg = document.createElementNS(SVF_NS, 'svg');
@@ -263,7 +265,6 @@
         e.preventDefault();
         e.stopPropagation();
     }, false);
-
     /*
         移除class
     */
@@ -279,9 +280,7 @@
         } else {
             dom.className = dom.className.replace(reg, "").trim();
         }
-
     };
-
     /*
         添加class
     */
@@ -289,28 +288,26 @@
         if (!dom) {
             return;
         }
-        var reg = new RegExp('\\b(' + className + ')\\b', 'gim');
+        var reg = new RegExp('\\s*\\b(' + className + ')\\b\\s*', 'gim');
         if (dom.length) {
             for (var i = 0; i < dom.length; i++) {
-                if (!reg.test(dom[i].className)) {
-                    dom[i].className = dom[i].className.trim() + " " + className;
+                if (!reg.test(dom[i].className.trim())) {
+                   dom[i].className = dom[i].className.trim() + " " + className;
                 }
+                reg.lastIndex = 0;
             }
         } else {
-            if (!reg.test(dom.className)) {
+            if (!reg.test(dom.className.trim())) {
                 dom.className = dom.className.trim() + " " + className;
             }
+            reg.lastIndex = 0;
         }
-
     }
-
     /*
         显示类型属性配置
     */
     function showAttrsConfig(type) {
-
     }
-
     /*
         显示元素
     */
@@ -319,17 +316,19 @@
         隐藏元素
     */
     function hiddenDom(selector) {
-
     }
-
     /*
         创建图形
     */
     function drawShape(type){
         if(!currentDom){
             var svgDom = document.createElementNS(SVF_NS, type);
-            for (attr in defaultConfig[type]){
+            svgDom.setAttribute("svgType",type);
+            for (var attr in defaultConfig[type]){
                 svgDom.setAttribute(attr,defaultConfig[type][attr]);
+            }
+            for(var attr in defaultConfig.public){
+                svgDom.setAttribute(attr,defaultConfig.public[attr]);
             }
             currentDom = svgDom;
             document.querySelector('svg').appendChild(svgDom);
@@ -338,6 +337,32 @@
         }
         
     }
+
+    /*
+        监听输入框事件
+    */
+    document.getElementById("shape_attrs").addEventListener('input',function(){
+        console.info(currentDom);
+        getInputConfig();
+    });
+
+    /*
+        获取输入框的值
+    */
+    function getInputConfig(){
+        var inputObjList = document.getElementById("shape_attrs").querySelectorAll('input');
+        var configObj = {};
+        for(var i = 0; i < inputObjList.length; i++){
+            var dataShape = inputObjList[i].parentNode.getAttribute('data-shape');
+            var nodeName = currentDom.nodeName.toLowerCase();
+            if(dataShape === nodeName || dataShape === 'all'){
+                var shapeAttr = inputObjList[i].getAttribute("id").toLowerCase().replace('nodeName','');
+                console.info(shapeAttr);
+                console.info(inputObjList[i].value);
+            }
+        }
+    }
+
 </script>
 
 </html>
