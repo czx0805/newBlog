@@ -78,6 +78,9 @@
             bottom: 10px;
             right: 5px;
         }
+        #container [svgType]{
+            cursor: pointer
+        }
     </style>
 </head>
 
@@ -96,78 +99,78 @@
                 <ul>
                     <!--Rect Start-->
                     <li data-shape='rect' class="hidden">
-                        <label for="rectX">X:</label>
-                        <input type="number" id='rectX' />
+                        <label for="rect_x">X:</label>
+                        <input type="number" id='rect_x' />
                     </li>
                     <li data-shape='rect' class="hidden">
-                        <label for="rectX">Y:</label>
-                        <input type="number" id='rectY' />
+                        <label for="rect_y">Y:</label>
+                        <input type="number" id='rect_y' />
                     </li>
                     <li data-shape='rect' class="hidden">
-                        <label for="rectWidth">Width:</label>
-                        <input type="number" id='rectWidth' />
+                        <label for="rect_width">Width:</label>
+                        <input type="number" id='rect_width' />
                     </li>
                     <li data-shape='rect' class="hidden">
-                        <label for="rectHeight">Height:</label>
-                        <input type="number" id='rectHeight' />
+                        <label for="rect_height">Height:</label>
+                        <input type="number" id='rect_height' />
                     </li>
                     <li data-shape='rect' class="hidden">
-                        <label for="rectRX">RX:</label>
-                        <input type="number" id='rectRX' />
+                        <label for="rect_rx">RX:</label>
+                        <input type="number" id='rect_rx' />
                     </li>
                     <li data-shape='rect' class="hidden">
-                        <label for="rectRY">RY:</label>
-                        <input type="number" id='rectRY' />
+                        <label for="rect_ry">RY:</label>
+                        <input type="number" id='rect_ry' />
                     </li>
                     <!--Rect end-->
                     <!--Circle Start-->
                     <li data-shape='circle' class="hidden">
-                        <label for="circleCX">CX:</label>
-                        <input type="number" id='circleCX' />
+                        <label for="circle_cx">CX:</label>
+                        <input type="number" id='circle_cx' />
                     </li>
                     <li data-shape='circle' class="hidden">
-                        <label for="circleCY">CY:</label>
-                        <input type="number" id='circleCY' />
+                        <label for="circle_cy">CY:</label>
+                        <input type="number" id='circle_cy' />
                     </li>
                     <li data-shape='circle' class="hidden">
-                        <label for="circleR">R:</label>
-                        <input type="number" id='circleR' />
+                        <label for="circle_r">R:</label>
+                        <input type="number" id='circle_r' />
                     </li>
                     <!--Circle end-->
                     <!--Ellipse Start-->
                     <li data-shape='ellipse' class="hidden">
-                        <label for="ellipseCX">CX:</label>
-                        <input type="number" id='ellipseCX' />
+                        <label for="ellipse_cx">CX:</label>
+                        <input type="number" id='ellipse_cx' />
                     </li>
                     <li data-shape='ellipse' class="hidden">
-                        <label for="ellipseCY">CY:</label>
-                        <input type="number" id='ellipseCY' />
+                        <label for="ellipse_cy">CY:</label>
+                        <input type="number" id='ellipse_cy' />
                     </li>
                     <li data-shape='ellipse' class="hidden">
-                        <label for="ellipseRX">RX:</label>
-                        <input type="number" id='ellipseRX' />
+                        <label for="ellipse_rx">RX:</label>
+                        <input type="number" id='ellipse_rx' />
                     </li>
                     <li data-shape='ellipse' class="hidden">
-                        <label for="ellipseRY">RY:</label>
-                        <input type="number" id='ellipseRY' />
+                        <label for="ellipse_ry">RY:</label>
+                        <input type="number" id='ellipse_ry' />
                     </li>
                     <!--Ellipse end-->
                     <!--line Start-->
                     <li data-shape='line' class="hidden">
-                        <label for="lineX1">X1:</label>
-                        <input type="number" id='lineCX' />
+                        <label for="line_x1">X1:</label>
+                        <input type="number" id='line_x1' />
                     </li>
                     <li data-shape='line' class="hidden">
-                        <label for="lineY1">Y1:</label>
-                        <input type="number" id='lineY1' />
+                        <label for="line_y1">Y1:</label>
+                        <input type="number" id='line_y1' />
                     </li>
                     <li data-shape='line' class="hidden">
-                        <label for="lineX2">X2:</label>
-                        <input type="number" id='lineX2' />
+                        <label for="line_x2">X2:</label>
+                        <input type="number" id='line_x2' />
                     </li>
                     <li data-shape='line' class="hidden">
-                        <label for="lineY2"> Y2:</label>
-                        <input type="number" id='lineY2' />
+                        <label for="line_y2"> Y2:</label>
+                        <input type="number" id='line_y2' />
                     </li>
                     <!--line end-->
                     <!--public attrs start-->
@@ -178,7 +181,7 @@
                     <li data-shape='all' class="hidden">
                         <label for="rectStrokeColor">描边:</label>
                         <input type="color" value='#000000' id='strokeColor' />
-                        <input type="range" value='1' min='0' max='50' id='strokeWidth' />
+                        <input type="range" value='1' min='0' max='50' id='stroke-width' />
                     </li>
                     <li data-shape='all' class="hidden">
                         <label for="translateX">translateX:</label>
@@ -332,6 +335,7 @@
             }
             currentDom = svgDom;
             document.querySelector('svg').appendChild(svgDom);
+            setInputValue(true,type);
         }else{
 
         }
@@ -342,7 +346,6 @@
         监听输入框事件
     */
     document.getElementById("shape_attrs").addEventListener('input',function(){
-        console.info(currentDom);
         getInputConfig();
     });
 
@@ -357,12 +360,22 @@
             var nodeName = currentDom.nodeName.toLowerCase();
             if(dataShape === nodeName || dataShape === 'all'){
                 var shapeAttr = inputObjList[i].getAttribute("id").toLowerCase().replace('nodeName','');
-                console.info(shapeAttr);
-                console.info(inputObjList[i].value);
+                currentDom.setAttribute(shapeAttr.replace(nodeName+"_",""),inputObjList[i].value);
             }
         }
     }
 
+    function setInputValue(isAdd,type){
+        if(isAdd){
+            var defaultCfg = defaultConfig[type];
+            for(var cfg in defaultCfg){
+                document.getElementById(type+"_"+cfg).value = defaultCfg[cfg];
+            }
+            
+        }else{
+            //TODO:动态获取已绘制图形的属性值
+        }
+    }
 </script>
 
 </html>
